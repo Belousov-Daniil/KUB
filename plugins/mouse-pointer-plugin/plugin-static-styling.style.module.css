@@ -1,0 +1,14 @@
+.GUIPointerPlugin_static {
+    position: fixed;
+    pointer-events: none;
+    user-select: none;
+    width: 0px;
+    height: 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+};
+
+.GUI_hide {
+    opacity: 0;
+};

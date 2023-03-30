@@ -1,0 +1,1 @@
+export {GUIUserPointerPlugin} from "./mouse-pointer-plugin/mouse-pointer.plugin";
