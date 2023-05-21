@@ -55,33 +55,18 @@ export class KUBApplication
         return KUBApplication._instance_
     };
     private constructor() {
-        
-        // 1. @section(Views)
-        this.appWindow = KUBApplication.APP_WINDOW;
-        this.desktopLayer = KUBApplication.DESKTOP_LAYER;
-
-        // 2. @section(Pages and routing)
+        // 1. @section(Pages and routing)
         this.appPages = new Map();
-        this._RouterDelegate_ = this._RouterDelegate_.bind(this);
-        this.router = KUBRouter.createRouter(this._RouterDelegate_);
-        
-        // 3. @section(session and process)
+        this.ROUTER_DELEGATE = this.ROUTER_DELEGATE.bind(this);
+        this.router = KUBRouter.createRouter(this.ROUTER_DELEGATE);
+
+        // 2. @section(session and process)
         this.session = new KUBAppsession();
 
-        // 4. @section(Mounting)
-        document.body.append(this.appWindow, this.desktopLayer);
+        // 3. @section(Mounting)
+        document.body.append(KUBApplication.APP_WINDOW, KUBApplication.DESKTOP_LAYER);
     };
     
-
-    // @property
-    private readonly appWindow: HTMLElement;
-    // @getter
-    public GET_APPLICATION_VIEW_ROOT(): HTMLElement {
-        return this.appWindow
-    };
-
-    // @property
-    private readonly desktopLayer: HTMLElement;
 
     // @property
     private readonly router: ISPARouter;
@@ -110,7 +95,7 @@ export class KUBApplication
 
 
     // @delegatecallback
-    private _RouterDelegate_(newRoute: string): void {
+    private ROUTER_DELEGATE(newRoute: string): void {
         
         this.onRouteChange(newRoute);
         const newPage = this.appPages.get(newRoute);
@@ -147,7 +132,7 @@ export class KUBApplication
     };
     // @syscall
     private SWAP_PAGE_CALL(toPage: KUBPageType) {
-        const newPage = new toPage(this.appWindow);
+        const newPage = new toPage(KUBApplication.APP_WINDOW);
         const oldPage = this.session.renderedPage;
         this.session.renderedPage = newPage;
         this.decorateSwapPages(oldPage, newPage);
@@ -164,7 +149,7 @@ export class KUBApplication
 
             if (render404flag) {
                 if (!this.page404) { throw new Page404NotSpecified() };
-                this.session.renderedPage = new this.page404(this.appWindow);
+                this.session.renderedPage = new this.page404(KUBApplication.APP_WINDOW);
                 this.session.renderedPage.RenderPage();
                 return;
             };
@@ -172,7 +157,7 @@ export class KUBApplication
         };
 
         const startingPage = this.appPages.get(path)!
-        this.session.renderedPage = new startingPage(this.appWindow);
+        this.session.renderedPage = new startingPage(KUBApplication.APP_WINDOW);
         this.session.renderedPage.RenderPage();
         return;
     };
@@ -191,7 +176,7 @@ export class KUBApplication
     };
     // @UserAPI
     public renderOnDesktop(...views: HTMLElement[]): void {
-        this.desktopLayer.append(...views)
+        KUBApplication.DESKTOP_LAYER.append(...views)
     };
 
 
