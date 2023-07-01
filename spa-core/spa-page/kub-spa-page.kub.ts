@@ -47,26 +47,3 @@ export abstract class KUBPage implements IKUBPage
         return Promise.resolve();
     };
 };
-
-
-// @documentation(Pages rendering)
-/*
- *  1. App receives from internal session storage page class to be rendered by route.
-
- *  2. App removes previous page, by calling page.RemovePage():
- *      - onBeforeRemove() - before being removed from the app window (page internal function)
- *      - page root being removed
- *      - afterRemove() - page totally removed from the app window (page internal function)
- *      - removeCallback() - same but public
- * 
- *  3. App renders new page:
- *      - App creates new instance of the page - all page contruction is being processed within contructor.
- *      - App calls page.RenderPage()
- *      - onBeforeRender() - before page root being attached to the app window
- *      - page being rendered to the app pages layer
- *      - onAfterRender() - page already attached to the app window
- * 
- *  Final:
- *      - Prev page removed
- *      - New page rendered
- */

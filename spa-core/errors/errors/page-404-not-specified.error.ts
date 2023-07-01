@@ -1,8 +1,6 @@
-import KUBSPAError from "../system/kub-spa-error.error.core";
 
-
-export class Page404NotSpecified extends KUBSPAError{
+export class Page404NotSpecified extends Error{
     constructor() {
-        super(Page404NotSpecified.name, `Page 404 not specified`);
+        super(`Page 404 not specified`);
     };
 };
